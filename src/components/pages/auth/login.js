@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react";
-
+import {useNavigate} from 'react-router-dom';
 const Login = () => {
   const initialValues = { email: "", password: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-
+  
+	const navigate = useNavigate();
+	const navigateToRegistrer = () => {
+    	navigate('/registrer');
+	}
+	const navigateToDashboard = (formValues) => {
+		navigate('/dashboard', {state : {id: 1, login: true, email : formValues.email}});
+	}
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
@@ -15,6 +22,9 @@ const Login = () => {
     e.preventDefault();
     setFormErrors(validate(formValues));
     setIsSubmit(true);
+		setTimeout(() => {
+			navigateToDashboard(formValues);
+		}, 2000);
   };
 
   useEffect(() => {
@@ -40,14 +50,14 @@ const Login = () => {
   };
 
   return (
-      <div className='container'>
+      <div className='login-container container-glass'>
           {Object.keys(formErrors).length === 0 && isSubmit ? (
             <div className="succes-submit text-gradient">Signed in successfully</div>
           ) : (
             <pre className="debug-submit">{JSON.stringify(formValues, undefined, 2)}</pre>
           )}
          <form className="login-form" onSubmit={handleSubmit}>
-          <h1 className="text-gradient login-title">Get your Velib</h1>
+          <h1 className="text-gradient login-title">GET YOUR VELIB</h1>
           <h2 className="text-gradient">Login</h2>
            <div className="input-container">
              <label className='form-label text-gradient'>Email</label>
@@ -74,8 +84,8 @@ const Login = () => {
            </div>
          </form>
          <div className="container-login-options">
-         <h4 className="text-gradient">Registrer</h4>
-         <h4 className="text-gradient">Forgot password</h4>
+				 		<button className="button-option" onClick={navigateToRegistrer}>Registrer</button>
+						<button>Forgot Password</button>
          </div>
         </div>
       );

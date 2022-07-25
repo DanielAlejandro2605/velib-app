@@ -9,8 +9,8 @@ const Navbar = () => {
 	}
     return <>
 		<nav className='main-nav'>
-			<button onClick={navigateToHome}>Home</button>
-			<button onClick={navigateToLogin}>Login</button>
+			<button className='button-nav' onClick={navigateToHome}>Home</button>
+			<button className='button-nav' onClick={navigateToLogin}>Login</button>
       	</nav>
     </>;
 }
